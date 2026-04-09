@@ -422,3 +422,31 @@ p{
     max-width:100%;
   }
 }
+
+.legal-hero{
+  padding:22px 0 36px;
+}
+
+.legal-logo{
+  max-width:520px;
+  margin-bottom:18px;
+}
+
+.legal-card{
+  padding:34px 24px;
+  text-align:left;
+}
+
+.legal-card h2{
+  font-size:24px;
+  margin:28px 0 10px;
+}
+
+.legal-card h2:first-child{
+  margin-top:0;
+}
+
+.legal-card p{
+  font-size:17px;
+  line-height:1.8;
+}
