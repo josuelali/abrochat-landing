@@ -1,0 +1,19 @@
+Listado de rutas de carpetas
+El número de serie del volumen es A6CD-2E19
+C:.
+│   index.html
+│
+├───assets
+│   ├───css
+│   │       style.css
+│   │
+│   └───img
+│           logo-abrochat.png
+│           logo-icon-abrochat.png
+│
+└───legal
+        aviso-legal.html
+        contacto.html
+        cookies.html
+        privacidad.html
+        sobre-nosotros.html
