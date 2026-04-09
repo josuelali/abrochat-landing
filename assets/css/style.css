@@ -360,7 +360,7 @@ p{
   }
 
 .btn-float{
-  animation: floatButton 2.6s ease-in-out infinite;
+  animation: floatButton 1.9s ease-in-out infinite;
 }
 
 .btn-float:hover{
@@ -369,13 +369,16 @@ p{
 
 @keyframes floatButton{
   0%{
-    transform:translateY(0);
+    transform:translateY(0) scale(1);
+    box-shadow:0 10px 24px rgba(37,99,235,0.22);
   }
   50%{
-    transform:translateY(-6px);
+    transform:translateY(-10px) scale(1.03);
+    box-shadow:0 18px 36px rgba(124,42,232,0.32);
   }
   100%{
-    transform:translateY(0);
+    transform:translateY(0) scale(1);
+    box-shadow:0 10px 24px rgba(37,99,235,0.22);
   }
 }
 
@@ -419,30 +422,45 @@ p{
 .footer-social-icons{
   display:flex;
   flex-wrap:wrap;
-  gap:14px;
+  gap:12px;
   margin-top:22px;
 }
 
 .footer-social-icons a{
-  width:42px;
-  height:42px;
+  width:44px;
+  min-width:44px;
+  max-width:44px;
+  height:44px;
+  min-height:44px;
+  max-height:44px;
   border-radius:50%;
   background:rgba(255,255,255,0.08);
-  display:flex;
+  display:inline-flex;
   align-items:center;
   justify-content:center;
-  transition:transform .2s ease, background .2s ease, opacity .2s ease;
+  overflow:hidden;
+  flex:0 0 44px;
+  line-height:0;
+  transition:transform .2s ease, background .2s ease, opacity .2s ease, box-shadow .2s ease;
 }
 
 .footer-social-icons a:hover{
-  transform:translateY(-2px);
+  transform:translateY(-3px);
   background:rgba(125, 211, 252, 0.16);
+  box-shadow:0 8px 20px rgba(0,0,0,0.18);
 }
 
-.footer-social-icons svg{
-  width:20px;
-  height:20px;
+.footer-social-icons a svg{
+  display:block;
+  width:20px !important;
+  height:20px !important;
+  min-width:20px;
+  min-height:20px;
+  max-width:20px;
+  max-height:20px;
   fill:#dfe9f7;
+  flex:0 0 20px;
+  object-fit:contain;
 }
 
 .footer-columns{
