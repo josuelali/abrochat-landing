@@ -1,141 +1,214 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Abrochat | Convierte ideas en ingresos con IA</title>
-  <meta name="description" content="Descubre ideas con inteligencia artificial y conviértelas en ingresos reales paso a paso.">
-  <link rel="icon" type="image/png" href="assets/img/logo-icon-abrochat.png">
-  <link rel="stylesheet" href="assets/css/style.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Abrochat | Convierte ideas en ingresos con IA</title>
+
+<link rel="icon" type="image/png" href="assets/img/logo-icon-abrochat.png">
+<link rel="stylesheet" href="assets/css/style.css">
+
+<style>
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.afiliados {
+  margin-top: 30px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.afiliados a {
+  padding: 10px 18px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 14px;
+  background: rgba(255,255,255,0.05);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.1);
+  transition: 0.3s;
+}
+
+.afiliados a:hover {
+  transform: scale(1.05);
+  background: linear-gradient(90deg,#6d28d9,#2563eb);
+}
+</style>
+
 </head>
+
 <body>
+
+<canvas id="matrix"></canvas>
 
 <main>
 
-<!-- HERO -->
 <section class="hero">
-  <div class="container">
+<div class="container">
 
-    <img src="assets/img/logo-abrochat.png" class="logo-hero" alt="Abrochat">
+<img src="assets/img/logo-abrochat.png" class="logo-hero">
 
-    <h1>Convierte ideas en ingresos con IA</h1>
-    <p class="hero-subtitle">
-      Descubre ideas listas para aplicar hoy mismo.
-    </p>
+<h1>Convierte ideas en ingresos con IA</h1>
+<p class="hero-subtitle">
+Descubre ideas listas para aplicar hoy mismo.
+</p>
 
-    <div class="hero-actions">
+<div class="hero-actions">
 
-      <a href="https://swift-idea-drop.lovable.app/" 
-         class="btn btn-primary btn-float" 
-         target="_blank">
-         Probar IA gratis
-      </a>
+<button class="btn btn-primary btn-float" onclick="analizar()">
+Analizar perfil
+</button>
 
-      <a href="https://swift-idea-drop.lovable.app/" 
-         class="btn btn-secondary" 
-         target="_blank">
-         Hablar con Jarvis
-      </a>
+<button class="btn btn-secondary" onclick="jarvis()">
+Hablar con Jarvis
+</button>
 
-    </div>
+</div>
 
-    <p style="margin-top:10px; font-size:14px; opacity:0.7;">
-      Tu asistente para generar ideas que puedes monetizar
-    </p>
+<p style="margin-top:10px; font-size:14px; opacity:0.7;">
+Tu asistente para generar ideas que puedes monetizar
+</p>
 
-  </div>
-</section>
+<!-- INPUTS -->
+<div style="margin-top:20px; text-align:center;">
+<input type="email" id="email" placeholder="Tu email" style="padding:10px; margin:5px;">
+<input type="text" id="username" placeholder="@usuario o web" style="padding:10px; margin:5px;">
+</div>
 
-<!-- DEMO -->
-<section class="section section-tight">
-  <div class="container">
-    <div class="card feature-card">
+<!-- AFILIADOS -->
+<div class="afiliados">
+<a href="https://josuecabellorosa83.systeme.io/30a703c4" target="_blank">🚀 Sistema IA</a>
+<a href="https://www.hostinger.com/es?REFERRALCODE=DZOJOSUECS4D" target="_blank">🌐 Hosting</a>
+<a href="https://pictory.ai?ref=joshue-cabello-rosa72" target="_blank">🎥 Vídeos IA</a>
+<a href="https://my.picodi.com/pe/refer/d9894b5c-9c95-45c4-b840-d39e34d77d9a" target="_blank">💸 Cashback</a>
+</div>
 
-      <h2>💡 Ejemplo real</h2>
-
-      <ul class="steps-list">
-        <li>1. Genera contenido con IA</li>
-        <li>2. Publica en redes o webs</li>
-        <li>3. Monetiza con afiliados</li>
-      </ul>
-
-      <a href="https://swift-idea-drop.lovable.app/" class="btn btn-secondary" target="_blank">
-        Quiero ideas ahora
-      </a>
-
-    </div>
-  </div>
-</section>
-
-<!-- CAPTURA -->
-<section class="section section-tight">
-  <div class="container">
-    <div class="capture-box">
-
-      <h2>Recibe ideas que puedes aplicar hoy mismo</h2>
-      <p>Sin teoría. Solo ideas reales.</p>
-
-      <input type="email" class="email-fake" placeholder="Tu email">
-
-      <a href="https://josuecabellorosa83.systeme.io/30a703c4" 
-         class="btn btn-primary" 
-         target="_blank">
-         Quiero ideas
-      </a>
-
-    </div>
-  </div>
-</section>
-
-<!-- CTA FINAL -->
-<section class="section section-tight">
-  <div class="container">
-    <div class="card transition-card">
-
-      <h2>Esto es solo el inicio</h2>
-      <p>El sistema completo es lo que genera ingresos reales.</p>
-
-      <a href="https://sistemamaestroia.com" 
-         class="btn btn-secondary" 
-         target="_blank">
-         Ver sistema completo
-      </a>
-
-    </div>
-  </div>
+</div>
 </section>
 
 </main>
-<footer class="footer">
-  <div class="container footer-content">
 
-    <p class="footer-brand-text">Conéctate a la IA y convierte ideas en ingresos.</p>
+<script>
+// MATRIX
+const MATRIX_CHARS = ['0','1','A','U','T','H','X','9','K','Σ','Λ','7','N','O','D','E','S','Y','S','Q','R','I','V','M','C','8','2','5','F','P'];
 
-    <div class="footer-links">
-      <a href="legal/aviso-legal.html">Aviso legal</a>
-      <a href="legal/privacidad.html">Privacidad</a>
-      <a href="legal/cookies.html">Cookies</a>
-      <a href="legal/contacto.html">Contacto</a>
-      <a href="legal/sobre-nosotros.html">Sobre nosotros</a>
-    </div>
+const canvas = document.getElementById("matrix");
+const ctx = canvas.getContext("2d");
 
-    <div class="footer-socials">
-      <a href="https://www.instagram.com/joshue_cr/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-        <svg viewBox="0 0 24 24" class="social-icon" aria-hidden="true">
-          <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7Zm5 3.5A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 0 1 12 7.5Zm0 2A2.5 2.5 0 1 0 14.5 12 2.5 2.5 0 0 0 12 9.5Zm5.25-3.15a1.1 1.1 0 1 1-1.1 1.1 1.1 1.1 0 0 1 1.1-1.1Z"/>
-        </svg>
-      </a>
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
-      <a href="https://www.youtube.com/@Automatizacon_IA" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
-        <svg viewBox="0 0 24 24" class="social-icon" aria-hidden="true">
-          <path d="M21.58 7.19a2.76 2.76 0 0 0-1.94-1.95C17.92 4.75 12 4.75 12 4.75s-5.92 0-7.64.49A2.76 2.76 0 0 0 2.42 7.2 28.79 28.79 0 0 0 2 12a28.79 28.79 0 0 0 .42 4.81 2.76 2.76 0 0 0 1.94 1.95c1.72.49 7.64.49 7.64.49s5.92 0 7.64-.49a2.76 2.76 0 0 0 1.94-1.95A28.79 28.79 0 0 0 22 12a28.79 28.79 0 0 0-.42-4.81ZM10 15.5v-7l6 3.5Z"/>
-        </svg>
-      </a>
-    </div>
+const fontSize = 14;
+const columns = canvas.width / fontSize;
 
-    <p class="footer-copy">© 2026 Abrochat. Todos los derechos reservados.</p>
+const drops = [];
 
-  </div>
-</footer>
+for(let x = 0; x < columns; x++) {
+  drops[x] = 1;
+}
+
+function draw() {
+  ctx.fillStyle = "rgba(0,0,0,0.05)";
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+
+  ctx.fillStyle = "#0f0";
+  ctx.font = fontSize + "px monospace";
+
+  for(let i = 0; i < drops.length; i++) {
+    const text = MATRIX_CHARS[Math.floor(Math.random() * MATRIX_CHARS.length)];
+    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+    if(drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+      drops[i] = 0;
+    }
+
+    drops[i]++;
+  }
+}
+
+setInterval(draw, 33);
+
+// ANALIZADOR
+async function analizar(){
+
+  const email = document.getElementById("email").value;
+  const username = document.getElementById("username").value;
+
+  if(!email || !username){
+    alert("Introduce email y usuario");
+    return;
+  }
+
+  try{
+    const res = await fetch("https://abrochat-backend.onrender.com/analyze", {
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body: JSON.stringify({
+        username: username,
+        platform: "instagram"
+      })
+    });
+
+    const data = await res.json();
+
+    alert(data.result || data.error);
+
+  }catch(e){
+    alert("Error conectando con IA");
+  }
+}
+
+// JARVIS VOZ
+function jarvis(){
+
+  const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+  recognition.lang = "es-ES";
+
+  recognition.start();
+
+  recognition.onresult = async function(event){
+
+    const texto = event.results[0][0].transcript;
+
+    try{
+      const res = await fetch("https://abrochat-backend.onrender.com/analyze", {
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json"
+        },
+        body: JSON.stringify({
+          username: texto,
+          platform: "instagram"
+        })
+      });
+
+      const data = await res.json();
+
+      hablar(data.result || "Sin respuesta");
+
+    }catch(e){
+      hablar("Error en el sistema");
+    }
+  };
+}
+
+function hablar(texto){
+  const speech = new SpeechSynthesisUtterance(texto);
+  speech.lang = "es-ES";
+  speech.pitch = 0.8;
+  speech.rate = 0.9;
+  speechSynthesis.speak(speech);
+}
+</script>
+
 </body>
 </html>
