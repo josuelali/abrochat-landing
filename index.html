@@ -193,7 +193,8 @@ function jarvis(){
 
       const data = await res.json();
 
-      hablar(data.result || "Sin respuesta");
+      alert("JARVIS:\n\n" + (data.result || "Sin respuesta"));
+     hablar(data.result || "Sin respuesta");
 
     }catch(e){
       hablar("Error en el sistema");
