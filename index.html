@@ -28,6 +28,7 @@ canvas {
   margin-top: 100px;
 }
 
+/* INPUTS */
 input {
   padding: 15px;
   border-radius: 10px;
@@ -36,15 +37,23 @@ input {
   margin: 10px;
 }
 
+/* BOTONES */
 button {
-  padding: 15px 25px;
-  border-radius: 10px;
+  padding: 15px 30px;
+  border-radius: 12px;
   border: none;
   font-weight: bold;
   cursor: pointer;
   background: linear-gradient(45deg, #6a00ff, #00c3ff);
   color: white;
   margin: 10px;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(0,195,255,0.5);
+}
+
+button:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 0 20px rgba(106,0,255,0.8);
 }
 
 /* RESULTADO */
@@ -61,15 +70,62 @@ button {
 
 /* AFILIADOS */
 .afiliados {
-  margin-top: 40px;
+  margin-top: 20px;
 }
 
 .afiliados a {
   display: inline-block;
-  margin: 5px;
-  font-size: 13px;
+  margin: 6px;
+  padding: 8px 14px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.08);
   color: #00c3ff;
+  font-size: 13px;
+  text-decoration: none;
+  transition: 0.3s;
 }
+
+.afiliados a:hover {
+  background: rgba(0,195,255,0.2);
+  transform: scale(1.05);
+}
+
+/* BOTÓN SISTEMA MAESTRO */
+.master-btn {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 14px 25px;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #00ff9f, #00c3ff);
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
+  box-shadow: 0 0 15px rgba(0,255,159,0.6);
+  transition: 0.3s;
+  position: relative;
+}
+
+.master-btn:hover {
+  transform: scale(1.07);
+  box-shadow: 0 0 25px rgba(0,255,159,1);
+}
+
+.master-btn::before {
+  content: "⇩";
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #00ff9f;
+  animation: floatArrow 1s infinite;
+}
+
+@keyframes floatArrow {
+  0% { transform: translate(-50%, 0); }
+  50% { transform: translate(-50%, 6px); }
+  100% { transform: translate(-50%, 0); }
+}
+
 </style>
 </head>
 
@@ -82,34 +138,47 @@ button {
   <h1>Convierte ideas en ingresos con IA</h1>
 
   <input id="email" placeholder="Tu email">
-  <input id="username" placeholder="@usuario">
+  <input id="username" placeholder="@usuario o web">
 
   <br>
 
-  <button onclick="analizarPerfil()">Analizar perfil</button>
-  <button onclick="hablarJarvis()">Hablar con Jarvis</button>
+  <!-- BOTONES PRINCIPALES -->
+  <button onclick="analizarPerfil()">Ver cómo monetizar tu perfil</button>
 
+  <button onclick="window.open('https://buy.stripe.com/3cIaEX2sT2oB6DNbSnabK03')">
+    Que lo haga Jarvis
+  </button>
+
+  <!-- RESULTADO -->
   <div id="resultado"></div>
 
   <!-- AFILIADOS -->
   <div class="afiliados">
-    <a href="https://pictory.ai?ref=joshue-cabello-rosa72" target="_blank">Pictory</a>
-    <a href="https://www.hostinger.com/es?REFERRALCODE=DZOJOSUECS4D" target="_blank">Hostinger</a>
-    <a href="https://josuecabellorosa83.systeme.io/30a703c4" target="_blank">Systeme</a>
-    <a href="https://my.picodi.com/pe/refer/d9894b5c-9c95-45c4-b840-d39e34d77d9a" target="_blank">Cashback</a>
+    <a href="https://pictory.ai?ref=joshue-cabello-rosa72" target="_blank">🎬 Videos IA</a>
+    <a href="https://www.hostinger.com/es?REFERRALCODE=DZOJOSUECS4D" target="_blank">🌐 Hosting</a>
+    <a href="https://josuecabellorosa83.systeme.io/30a703c4" target="_blank">🚀 Sistema IA</a>
+    <a href="https://my.picodi.com/pe/refer/d9894b5c-9c95-45c4-b840-d39e34d77d9a" target="_blank">💸 Cashback</a>
   </div>
+
+  <!-- CTA SISTEMA MAESTRO -->
+  <a href="https://sistemamaestroia.com" target="_blank" class="master-btn">
+    Acceder al Sistema Maestro IA
+  </a>
+
+  <!-- SEGUNDO CTA -->
+  <br>
+
+  <a href="https://sistemamaestro.com" target="_blank" class="master-btn">
+    Crear tu propio sistema automático
+  </a>
 
 </div>
 
 <script>
 
-// EMAIL
-const savedEmail = localStorage.getItem("email");
-if(savedEmail){
-  document.getElementById("email").value = savedEmail;
-}
-
+// ==========================
 // MATRIX
+// ==========================
 const canvas = document.getElementById("matrix");
 const ctx = canvas.getContext("2d");
 
@@ -143,22 +212,22 @@ function draw() {
 
 setInterval(draw, 33);
 
-// ANALIZAR
+// ==========================
+// ANALIZAR PERFIL
+// ==========================
 async function analizarPerfil() {
 
   const email = document.getElementById("email").value;
   const username = document.getElementById("username").value;
 
   if (!email || !username) {
-    alert("Completa todos los campos");
+    alert("Completa los campos");
     return;
   }
 
-  localStorage.setItem("email", email);
-
   const resultadoDiv = document.getElementById("resultado");
   resultadoDiv.style.display = "block";
-  resultadoDiv.innerText = "Analizando...";
+  resultadoDiv.innerHTML = "Analizando...";
 
   try {
 
@@ -168,8 +237,8 @@ async function analizarPerfil() {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        email: email,
-        username: username,
+        email,
+        username,
         platform: "instagram"
       })
     });
@@ -179,54 +248,28 @@ async function analizarPerfil() {
     if(data.paywall){
 
       resultadoDiv.innerHTML = `
-      <h3>🔒 Has agotado tus análisis gratuitos</h3>
+        <h3>🔒 Desbloquea el análisis completo</h3>
 
-      <p>Elige una opción:</p>
+        <button onclick="window.open('https://buy.stripe.com/9B66oH4B18MZ6DN4pVabK05')">
+          Básico 3,99€
+        </button>
 
-      <a href="https://buy.stripe.com/9B66oH4B18MZ6DN4pVabK05" target="_blank">
-        <button>Informe básico 3,99€</button>
-      </a>
+        <button onclick="window.open('https://buy.stripe.com/3cIaEX2sT2oB6DNbSnabK03')">
+          Plus 6,99€
+        </button>
 
-      <a href="https://buy.stripe.com/3cIaEX2sT2oB6DNbSnabK03" target="_blank">
-        <button>Informe Plus 6,99€</button>
-      </a>
-
-      <a href="https://buy.stripe.com/00wcN57Nd4wJe6f9KfabK04" target="_blank">
-        <button>PRO 29,99€/mes</button>
-      </a>
+        <button onclick="window.open('https://buy.stripe.com/00wcN57Nd4wJe6f9KfabK04')">
+          PRO 29,99€/mes
+        </button>
       `;
       return;
     }
 
-    if(data.result){
-      resultadoDiv.innerText = data.result;
-    } else {
-      resultadoDiv.innerText = data.error;
-    }
+    resultadoDiv.innerHTML = `<div>${data.result}</div>`;
 
-  } catch (error) {
-    resultadoDiv.innerText = "Error conectando con IA";
+  } catch {
+    resultadoDiv.innerHTML = "Error conectando con IA";
   }
-}
-
-// JARVIS
-function hablarJarvis() {
-
-  const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-  recognition.lang = "es-ES";
-
-  recognition.start();
-
-  recognition.onresult = function(event) {
-    const texto = event.results[0][0].transcript;
-
-    document.getElementById("resultado").style.display = "block";
-    document.getElementById("resultado").innerText = "Jarvis: " + texto;
-
-    const speech = new SpeechSynthesisUtterance("Entendido");
-    speech.lang = "es-ES";
-    speechSynthesis.speak(speech);
-  };
 }
 
 </script>
