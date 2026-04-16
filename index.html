@@ -1,15 +1,21 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Abrochat | Convierte ideas en ingresos con IA</title>
-
-<link rel="icon" type="image/png" href="assets/img/logo-icon-abrochat.png">
-<link rel="stylesheet" href="assets/css/style.css">
+<title>Abrochat</title>
 
 <style>
+body {
+  margin: 0;
+  font-family: Arial;
+  background: black;
+  color: white;
+  text-align: center;
+}
+
+/* MATRIX */
 canvas {
   position: fixed;
   top: 0;
@@ -17,117 +23,103 @@ canvas {
   z-index: -1;
 }
 
-.afiliados {
-  margin-top: 30px;
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  justify-content: center;
+/* CONTENIDO */
+.container {
+  margin-top: 100px;
 }
 
-.afiliados a {
-  padding: 10px 18px;
-  border-radius: 8px;
-  text-decoration: none;
-  font-size: 14px;
-  background: rgba(255,255,255,0.05);
-  color: #fff;
-  border: 1px solid rgba(255,255,255,0.1);
-  transition: 0.3s;
+input {
+  padding: 15px;
+  border-radius: 10px;
+  border: none;
+  width: 250px;
+  margin: 10px;
 }
 
-.afiliados a:hover {
-  transform: scale(1.05);
-  background: linear-gradient(90deg,#6d28d9,#2563eb);
+button {
+  padding: 15px 25px;
+  border-radius: 10px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  background: linear-gradient(45deg, #6a00ff, #00c3ff);
+  color: white;
+  margin: 10px;
+}
+
+/* RESULTADO */
+#resultado {
+  display: none;
+  margin: 30px auto;
+  padding: 20px;
+  max-width: 700px;
+  background: rgba(0,0,0,0.7);
+  border-radius: 15px;
+  text-align: left;
+  white-space: pre-line;
 }
 </style>
-
 </head>
 
 <body>
 
 <canvas id="matrix"></canvas>
 
-<main>
-
-<section class="hero">
 <div class="container">
 
-<img src="assets/img/logo-abrochat.png" class="logo-hero">
+  <h1>Convierte ideas en ingresos con IA</h1>
 
-<h1>Convierte ideas en ingresos con IA</h1>
-<p class="hero-subtitle">
-Descubre ideas listas para aplicar hoy mismo.
-</p>
+  <input id="email" placeholder="Tu email">
+  <input id="username" placeholder="@usuario">
 
-<div class="hero-actions">
+  <br>
 
-<button class="btn btn-primary btn-float" onclick="analizar()">
-Analizar perfil
-</button>
+  <button onclick="analizarPerfil()">Analizar perfil</button>
+  <button onclick="hablarJarvis()">Hablar con Jarvis</button>
 
-<button class="btn btn-secondary" onclick="jarvis()">
-Hablar con Jarvis
-</button>
+  <div id="resultado"></div>
 
 </div>
-
-<p style="margin-top:10px; font-size:14px; opacity:0.7;">
-Tu asistente para generar ideas que puedes monetizar
-</p>
-
-<!-- INPUTS -->
-<div style="margin-top:20px; text-align:center;">
-<input type="email" id="email" placeholder="Tu email" style="padding:10px; margin:5px;">
-<input type="text" id="username" placeholder="@usuario o web" style="padding:10px; margin:5px;">
-</div>
-
-<!-- AFILIADOS -->
-<div class="afiliados">
-<a href="https://josuecabellorosa83.systeme.io/30a703c4" target="_blank">🚀 Sistema IA</a>
-<a href="https://www.hostinger.com/es?REFERRALCODE=DZOJOSUECS4D" target="_blank">🌐 Hosting</a>
-<a href="https://pictory.ai?ref=joshue-cabello-rosa72" target="_blank">🎥 Vídeos IA</a>
-<a href="https://my.picodi.com/pe/refer/d9894b5c-9c95-45c4-b840-d39e34d77d9a" target="_blank">💸 Cashback</a>
-</div>
-
-</div>
-</section>
-
-</main>
 
 <script>
-// MATRIX
-const MATRIX_CHARS = ['0','1','A','U','T','H','X','9','K','Σ','Λ','7','N','O','D','E','S','Y','S','Q','R','I','V','M','C','8','2','5','F','P'];
 
+// ==========================
+// GUARDAR EMAIL
+// ==========================
+const savedEmail = localStorage.getItem("email");
+if(savedEmail){
+  document.getElementById("email").value = savedEmail;
+}
+
+// ==========================
+// MATRIX
+// ==========================
 const canvas = document.getElementById("matrix");
 const ctx = canvas.getContext("2d");
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
+const chars = "01ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const fontSize = 14;
 const columns = canvas.width / fontSize;
-
 const drops = [];
 
-for(let x = 0; x < columns; x++) {
-  drops[x] = 1;
-}
+for (let x = 0; x < columns; x++) drops[x] = 1;
 
 function draw() {
-  ctx.fillStyle = "rgba(0,0,0,0.05)";
-  ctx.fillRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  ctx.fillStyle = "#0f0";
+  ctx.fillStyle = "#0F0";
   ctx.font = fontSize + "px monospace";
 
-  for(let i = 0; i < drops.length; i++) {
-    const text = MATRIX_CHARS[Math.floor(Math.random() * MATRIX_CHARS.length)];
+  for (let i = 0; i < drops.length; i++) {
+    const text = chars[Math.floor(Math.random() * chars.length)];
     ctx.fillText(text, i * fontSize, drops[i] * fontSize);
 
-    if(drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975)
       drops[i] = 0;
-    }
 
     drops[i]++;
   }
@@ -135,80 +127,150 @@ function draw() {
 
 setInterval(draw, 33);
 
-// ANALIZADOR
-async function analizar(){
+// ==========================
+// ANALIZAR PERFIL
+// ==========================
+async function analizarPerfil() {
 
   const email = document.getElementById("email").value;
   const username = document.getElementById("username").value;
 
-  if(!email || !username){
-    alert("Introduce email y usuario");
+  if (!email || !username) {
+    alert("Completa todos los campos");
     return;
   }
 
-  try{
-    const res = await fetch("https://abrochat-backend.onrender.com/analyze", {
-      method:"POST",
-      headers:{
-        "Content-Type":"application/json"
+  localStorage.setItem("email", email);
+
+  const resultadoDiv = document.getElementById("resultado");
+  resultadoDiv.style.display = "block";
+  resultadoDiv.innerText = "Analizando...";
+
+  try {
+
+    const response = await fetch("https://abrochat-backend.onrender.com/analyze", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
+        email: email,
         username: username,
         platform: "instagram"
       })
     });
 
-    const data = await res.json();
+    const data = await response.json();
 
-    alert(data.result || data.error);
+    // ==========================
+    // PAYWALL
+    // ==========================
+    if(data.paywall){
 
-  }catch(e){
-    alert("Error conectando con IA");
+      resultadoDiv.innerHTML = `
+      <h2 style="color:#ff4d4d;">🚨 Has agotado tus análisis gratuitos</h2>
+      <p>Tu perfil tiene oportunidades claras de crecimiento y monetización.</p>
+
+      <hr>
+
+      <h3>🔥 Elige cómo avanzar:</h3>
+
+      <a href="https://buy.stripe.com/9B66oH4B18MZ6DN4pVabK05" target="_blank">
+        <button>Informe básico 3,99€</button>
+      </a>
+
+      <a href="https://buy.stripe.com/3cIaEX2sT2oB6DNbSnabK03" target="_blank">
+        <button style="background:purple;">Informe Plus 6,99€</button>
+      </a>
+
+      <a href="https://buy.stripe.com/00wcN57Nd4wJe6f9KfabK04" target="_blank">
+        <button style="background:orange;">PRO 29,99€/mes</button>
+      </a>
+
+      <p style="color:#00ff99;">+1.200 usuarios ya están mejorando sus perfiles</p>
+      `;
+
+      return;
+    }
+
+    // ==========================
+    // RESULTADO NORMAL
+    // ==========================
+    if(data.result){
+
+      resultadoDiv.innerHTML = `
+      <h3 style="color:#00ffcc;">✔ Análisis generado</h3>
+      <p>${data.result}</p>
+
+      <hr>
+
+      <h4>🚀 Mejora continua automática</h4>
+
+      <a href="https://buy.stripe.com/00wcN57Nd4wJe6f9KfabK04" target="_blank">
+        <button style="background:orange;">Activar PRO</button>
+      </a>
+      `;
+
+    } else {
+      resultadoDiv.innerText = data.error || "Error desconocido";
+    }
+
+  } catch (error) {
+    resultadoDiv.innerText = "Error conectando con IA";
   }
 }
 
-// JARVIS VOZ
-function jarvis(){
+// ==========================
+// JARVIS VOZ + RESPUESTA IA
+// ==========================
+function hablarJarvis() {
 
   const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
   recognition.lang = "es-ES";
 
   recognition.start();
 
-  recognition.onresult = async function(event){
+  recognition.onresult = async function(event) {
 
     const texto = event.results[0][0].transcript;
 
-    try{
-      const res = await fetch("https://abrochat-backend.onrender.com/analyze", {
-        method:"POST",
-        headers:{
-          "Content-Type":"application/json"
+    const resultadoDiv = document.getElementById("resultado");
+    resultadoDiv.style.display = "block";
+    resultadoDiv.innerText = "Pensando...";
+
+    try {
+
+      const response = await fetch("https://abrochat-backend.onrender.com/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          username: texto,
-          platform: "instagram"
+          message: texto
         })
       });
 
-      const data = await res.json();
+      const data = await response.json();
 
-      alert("JARVIS:\n\n" + (data.result || "Sin respuesta"));
-     hablar(data.result || "Sin respuesta");
+      resultadoDiv.innerText = data.reply || "Sin respuesta";
 
-    }catch(e){
-      hablar("Error en el sistema");
+      const speech = new SpeechSynthesisUtterance(data.reply);
+      speech.lang = "es-ES";
+      speech.rate = 0.9;
+      speech.pitch = 0.8;
+
+      speechSynthesis.speak(speech);
+
+    } catch {
+      resultadoDiv.innerText = "Error con Jarvis";
     }
+  };
+
+  recognition.onerror = function() {
+    alert("Error en micrófono");
   };
 }
 
-function hablar(texto){
-  const speech = new SpeechSynthesisUtterance(texto);
-  speech.lang = "es-ES";
-  speech.pitch = 0.8;
-  speech.rate = 0.9;
-  speechSynthesis.speak(speech);
-}
 </script>
 
 </body>
