@@ -1,278 +1,327 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-VY2WFXX865"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-VY2WFXX865');
+  </script>
 
-<title>Abrochat</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Abrochat</title>
 
-<style>
-body {
-  margin: 0;
-  font-family: Arial;
-  background: black;
-  color: white;
-  text-align: center;
-}
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: black;
+      color: white;
+      text-align: center;
+    }
 
-/* MATRIX */
-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: -1;
-}
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
 
-/* CONTENIDO */
-.container {
-  margin-top: 100px;
-}
+    .container {
+      margin-top: 60px;
+      padding: 20px;
+      max-width: 980px;
+      margin-left: auto;
+      margin-right: auto;
+    }
 
-/* INPUTS */
-input {
-  padding: 15px;
-  border-radius: 10px;
-  border: none;
-  width: 250px;
-  margin: 10px;
-}
+    .top-access {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+    }
 
-/* BOTONES */
-button {
-  padding: 15px 30px;
-  border-radius: 12px;
-  border: none;
-  font-weight: bold;
-  cursor: pointer;
-  background: linear-gradient(45deg, #6a00ff, #00c3ff);
-  color: white;
-  margin: 10px;
-  transition: all 0.3s ease;
-  box-shadow: 0 0 10px rgba(0,195,255,0.5);
-}
+    input {
+      padding: 15px;
+      border-radius: 10px;
+      border: none;
+      width: 250px;
+      margin: 10px;
+    }
 
-button:hover {
-  transform: translateY(-3px) scale(1.05);
-  box-shadow: 0 0 20px rgba(106,0,255,0.8);
-}
+    button,
+    .cta-link {
+      display: inline-block;
+      padding: 15px 30px;
+      border-radius: 12px;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      background: linear-gradient(45deg, #6a00ff, #00c3ff);
+      color: white;
+      margin: 10px;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 10px rgba(0,195,255,0.5);
+      text-decoration: none;
+    }
 
-/* RESULTADO */
-#resultado {
-  display: none;
-  margin: 30px auto;
-  padding: 20px;
-  max-width: 700px;
-  background: rgba(0,0,0,0.6);
-  border-radius: 15px;
-  text-align: left;
-  white-space: pre-line;
-}
+    button:hover,
+    .cta-link:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 0 20px rgba(106,0,255,0.8);
+    }
 
-/* AFILIADOS */
-.afiliados {
-  margin-top: 20px;
-}
+    .cta-app {
+      background: linear-gradient(45deg, #ff00cc, #7c3aed);
+      box-shadow: 0 0 14px rgba(255,0,204,0.45);
+    }
 
-.afiliados a {
-  display: inline-block;
-  margin: 6px;
-  padding: 8px 14px;
-  border-radius: 10px;
-  background: rgba(255,255,255,0.08);
-  color: #00c3ff;
-  font-size: 13px;
-  text-decoration: none;
-  transition: 0.3s;
-}
+    .cta-app:hover {
+      box-shadow: 0 0 24px rgba(255,0,204,0.75);
+    }
 
-.afiliados a:hover {
-  background: rgba(0,195,255,0.2);
-  transform: scale(1.05);
-}
+    #resultado {
+      display: none;
+      margin: 30px auto;
+      padding: 20px;
+      max-width: 700px;
+      background: rgba(0,0,0,0.6);
+      border-radius: 15px;
+      text-align: left;
+      white-space: pre-line;
+    }
 
-/* BOTÓN SISTEMA MAESTRO */
-.master-btn {
-  display: inline-block;
-  margin-top: 20px;
-  padding: 14px 25px;
-  border-radius: 12px;
-  background: linear-gradient(90deg, #00ff9f, #00c3ff);
-  color: black;
-  font-weight: bold;
-  text-decoration: none;
-  box-shadow: 0 0 15px rgba(0,255,159,0.6);
-  transition: 0.3s;
-  position: relative;
-}
+    .afiliados {
+      margin-top: 20px;
+    }
 
-.master-btn:hover {
-  transform: scale(1.07);
-  box-shadow: 0 0 25px rgba(0,255,159,1);
-}
+    .afiliados a {
+      display: inline-block;
+      margin: 6px;
+      padding: 8px 14px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.08);
+      color: #00c3ff;
+      font-size: 13px;
+      text-decoration: none;
+      transition: 0.3s;
+    }
 
-.master-btn::before {
-  content: "⇩";
-  position: absolute;
-  top: -18px;
-  left: 50%;
-  transform: translateX(-50%);
-  color: #00ff9f;
-  animation: floatArrow 1s infinite;
-}
+    .afiliados a:hover {
+      background: rgba(0,195,255,0.2);
+      transform: scale(1.05);
+    }
 
-@keyframes floatArrow {
-  0% { transform: translate(-50%, 0); }
-  50% { transform: translate(-50%, 6px); }
-  100% { transform: translate(-50%, 0); }
-}
+    .master-btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 14px 25px;
+      border-radius: 12px;
+      background: linear-gradient(90deg, #00ff9f, #00c3ff);
+      color: black;
+      font-weight: bold;
+      text-decoration: none;
+      box-shadow: 0 0 15px rgba(0,255,159,0.6);
+      transition: 0.3s;
+      position: relative;
+    }
 
-</style>
+    .master-btn:hover {
+      transform: scale(1.07);
+      box-shadow: 0 0 25px rgba(0,255,159,1);
+    }
+
+    .master-btn::before {
+      content: "⇩";
+      position: absolute;
+      top: -18px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #00ff9f;
+      animation: floatArrow 1s infinite;
+    }
+
+    .app-access-box {
+      max-width: 760px;
+      margin: 35px auto 20px;
+      padding: 22px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 0 18px rgba(0,195,255,0.12);
+    }
+
+    .app-access-box h2 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 26px;
+    }
+
+    .app-access-box p {
+      margin: 0 auto 18px;
+      max-width: 620px;
+      color: #d8e8ff;
+      line-height: 1.5;
+    }
+
+    .app-url {
+      display: block;
+      margin-top: 10px;
+      font-size: 14px;
+      color: #8fe8ff;
+      word-break: break-all;
+    }
+
+    @keyframes floatArrow {
+      0% { transform: translate(-50%, 0); }
+      50% { transform: translate(-50%, 6px); }
+      100% { transform: translate(-50%, 0); }
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        margin-top: 30px;
+      }
+
+      input {
+        width: calc(100% - 40px);
+        max-width: 320px;
+      }
+
+      button,
+      .cta-link,
+      .master-btn {
+        width: calc(100% - 40px);
+        max-width: 320px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<canvas id="matrix"></canvas>
+  <canvas id="matrix"></canvas>
 
-<div class="container">
+  <div class="container">
 
-  <h1>Convierte ideas en ingresos con IA</h1>
+    <div class="top-access">
+      <a href="https://vendeconia.org" target="_blank" rel="noopener noreferrer" class="cta-link">
+        💼 VendeConIA
+      </a>
 
-  <input id="email" placeholder="Tu email">
-  <input id="username" placeholder="@usuario o web">
+      <a href="https://infovendeconia.com" target="_blank" rel="noopener noreferrer" class="cta-link">
+        📘 InfoVendeConIA
+      </a>
+    </div>
 
-  <br>
+    <h1>Convierte ideas en ingresos con IA</h1>
 
-  <!-- BOTONES PRINCIPALES -->
-  <button onclick="analizarPerfil()">Ver cómo monetizar tu perfil</button>
+    <input id="email" placeholder="Tu email">
 
-  <button onclick="window.open('https://buy.stripe.com/3cIaEX2sT2oB6DNbSnabK03')">
-    Que lo haga Jarvis
-  </button>
+    <br>
 
-  <!-- RESULTADO -->
-  <div id="resultado"></div>
+    <button onclick="analizarPerfil()">Recibir ideas para monetizar con IA</button>
 
-  <!-- AFILIADOS -->
-  <div class="afiliados">
-    <a href="https://pictory.ai?ref=joshue-cabello-rosa72" target="_blank">🎬 Videos IA</a>
-    <a href="https://www.hostinger.com/es?REFERRALCODE=DZOJOSUECS4D" target="_blank">🌐 Hosting</a>
-    <a href="https://josuecabellorosa83.systeme.io/30a703c4" target="_blank">🚀 Sistema IA</a>
-    <a href="https://my.picodi.com/pe/refer/d9894b5c-9c95-45c4-b840-d39e34d77d9a" target="_blank">💸 Cashback</a>
+    <button onclick="window.open('https://buy.stripe.com/3cIaEX2sT2oB6DNbSnabK03')">
+      Quiero que lo haga Jarvis
+    </button>
+
+    <div id="resultado"></div>
+
+    <div class="app-access-box">
+      <h2>Acceso directo a AbroChat</h2>
+      <p>
+        Accede directamente a AbroChat y entra a tus asistentes, herramientas y funciones de IA desde la aplicación.
+      </p>
+
+      <a href="https://app.abrochat.com" target="_blank" rel="noopener noreferrer" class="cta-link cta-app">
+        ⚡ Abrir la App de AbroChat
+      </a>
+
+      <span class="app-url">https://app.abrochat.com</span>
+    </div>
+
+    <div class="afiliados">
+      <a href="https://pictory.ai?ref=joshue-cabello-rosa72" target="_blank" rel="noopener noreferrer">🎬 Videos IA</a>
+      <a href="https://www.hostinger.com/es?REFERRALCODE=DZOJOSUECS4D" target="_blank" rel="noopener noreferrer">🌐 Hosting</a>
+      <a href="https://josuecabellorosa83.systeme.io/30a703c4" target="_blank" rel="noopener noreferrer">🚀 Sistema IA</a>
+      <a href="https://my.picodi.com/pe/refer/d9894b5c-9c95-45c4-b840-d39e34d77d9a" target="_blank" rel="noopener noreferrer">💸 Cashback</a>
+    </div>
+
+    <a href="https://sistemamaestroia.com" target="_blank" rel="noopener noreferrer" class="master-btn">
+      Acceder al Sistema Maestro IA
+    </a>
+
+    <br>
+
+    <a href="https://sistemamaestro.com" target="_blank" rel="noopener noreferrer" class="master-btn">
+      Crear tu propio sistema automático
+    </a>
+
   </div>
 
-  <!-- CTA SISTEMA MAESTRO -->
-  <a href="https://sistemamaestroia.com" target="_blank" class="master-btn">
-    Acceder al Sistema Maestro IA
-  </a>
+  <script>
+    // ==========================
+    // MATRIX
+    // ==========================
+    const canvas = document.getElementById("matrix");
+    const ctx = canvas.getContext("2d");
 
-  <!-- SEGUNDO CTA -->
-  <br>
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
-  <a href="https://sistemamaestro.com" target="_blank" class="master-btn">
-    Crear tu propio sistema automático
-  </a>
+    const chars = "01ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const fontSize = 14;
+    const columns = canvas.width / fontSize;
+    const drops = [];
 
-</div>
+    for (let x = 0; x < columns; x++) drops[x] = 1;
 
-<script>
+    function draw() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-// ==========================
-// MATRIX
-// ==========================
-const canvas = document.getElementById("matrix");
-const ctx = canvas.getContext("2d");
+      ctx.fillStyle = "#0F0";
+      ctx.font = fontSize + "px monospace";
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+      for (let i = 0; i < drops.length; i++) {
+        const text = chars[Math.floor(Math.random() * chars.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
 
-const chars = "01ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-const fontSize = 14;
-const columns = canvas.width / fontSize;
-const drops = [];
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
 
-for (let x = 0; x < columns; x++) drops[x] = 1;
-
-function draw() {
-  ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-  ctx.fillStyle = "#0F0";
-  ctx.font = fontSize + "px monospace";
-
-  for (let i = 0; i < drops.length; i++) {
-    const text = chars[Math.floor(Math.random() * chars.length)];
-    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975)
-      drops[i] = 0;
-
-    drops[i]++;
-  }
-}
-
-setInterval(draw, 33);
-
-// ==========================
-// ANALIZAR PERFIL
-// ==========================
-async function analizarPerfil() {
-
-  const email = document.getElementById("email").value;
-  const username = document.getElementById("username").value;
-
-  if (!email || !username) {
-    alert("Completa los campos");
-    return;
-  }
-
-  const resultadoDiv = document.getElementById("resultado");
-  resultadoDiv.style.display = "block";
-  resultadoDiv.innerHTML = "Analizando...";
-
-  try {
-
-    const response = await fetch("https://abrochat-backend.onrender.com/analyze", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        email,
-        username,
-        platform: "instagram"
-      })
-    });
-
-    const data = await response.json();
-
-    if(data.paywall){
-
-      resultadoDiv.innerHTML = `
-        <h3>🔒 Desbloquea el análisis completo</h3>
-
-        <button onclick="window.open('https://buy.stripe.com/9B66oH4B18MZ6DN4pVabK05')">
-          Básico 3,99€
-        </button>
-
-        <button onclick="window.open('https://buy.stripe.com/3cIaEX2sT2oB6DNbSnabK03')">
-          Plus 6,99€
-        </button>
-
-        <button onclick="window.open('https://buy.stripe.com/00wcN57Nd4wJe6f9KfabK04')">
-          PRO 29,99€/mes
-        </button>
-      `;
-      return;
+        drops[i]++;
+      }
     }
 
-    resultadoDiv.innerHTML = `<div>${data.result}</div>`;
+    setInterval(draw, 33);
 
-  } catch {
-    resultadoDiv.innerHTML = "Error conectando con IA";
-  }
-}
+    // ==========================
+    // ANALIZAR PERFIL / EMAIL
+    // ==========================
+    async function analizarPerfil() {
+      const email = document.getElementById("email").value;
 
-</script>
+      if (!email) {
+        alert("Completa el email");
+        return;
+      }
+
+      const resultadoDiv = document.getElementById("resultado");
+      resultadoDiv.style.display = "block";
+      resultadoDiv.innerHTML = `
+        <h3>✅ Solicitud recibida</h3>
+        <p>Te enviaremos ideas, recursos y opciones para monetizar con IA a: <strong>${email}</strong></p>
+      `;
+    }
+  </script>
 
 </body>
 </html>
