@@ -8,6 +8,15 @@
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'G-VY2WFXX865');
+    function trackAbrochatEvent(eventName, params) {
+      if (typeof gtag === 'function') {
+        gtag('event', eventName, {
+          asset_name: 'abrochat_landing',
+          page_url: window.location.href,
+          ...params
+        });
+      }
+    }
   </script>
 
   <meta charset="UTF-8">
@@ -210,11 +219,11 @@
   <div class="container">
 
     <div class="top-access">
-      <a href="https://vendeconia.org" target="_blank" rel="noopener noreferrer" class="cta-link">
+      <a href="https://vendeconia.org" target="_blank" rel="noopener noreferrer" class="cta-link" onclick="trackAbrochatEvent('cta_click', { cta_text: 'VendeConIA', cta_location: 'top_access', destination_url: this.href })">
         💼 VendeConIA
       </a>
 
-      <a href="https://infovendeconia.com" target="_blank" rel="noopener noreferrer" class="cta-link">
+      <a href="https://infovendeconia.com" target="_blank" rel="noopener noreferrer" class="cta-link" onclick="trackAbrochatEvent('cta_click', { cta_text: 'InfoVendeConIA', cta_location: 'top_access', destination_url: this.href })">
         📘 InfoVendeConIA
       </a>
     </div>
@@ -225,7 +234,7 @@
 
     <br>
 
-    <button onclick="analizarPerfil()">Recibir ideas para monetizar con IA</button>
+    <button onclick="trackAbrochatEvent('beta_interest_click', { cta_text: 'Recibir ideas para monetizar con IA', cta_location: 'main_form' }); analizarPerfil();">Recibir ideas para monetizar con IA</button>
 
     <button onclick="window.open('https://buy.stripe.com/3cIaEX2sT2oB6DNbSnabK03')">
       Que lo haga Jarvis — 6,99 €
@@ -253,7 +262,7 @@
         Precio beta disponible durante: <span id="beta-countdown">calculando...</span>
       </div>
 
-      <a href="https://buy.stripe.com/fZueVf4zyglmbfa57lgYU00" target="_blank" rel="noopener noreferrer" class="cta-link cta-app">
+      <a href="https://buy.stripe.com/fZueVf4zyglmbfa57lgYU00" target="_blank" rel="noopener noreferrer" class="cta-link cta-app" onclick="trackAbrochatEvent('begin_checkout', { cta_text: 'Acceder a AbroChat Pro — 19 €', cta_location: 'pricing_beta', destination_url: this.href, product_name: 'AbroChat Pro Beta', value: 19, currency: 'EUR' })">
         ⚡ Acceder a AbroChat Pro — 19 €
       </a>
 
