@@ -1,6 +1,7 @@
 {
   "rewrites": [
     { "source": "/_wake", "destination": "https://porra-navidena.onrender.com/api/config" },
+    { "source": "/_experience", "destination": "https://porra-navidena.onrender.com/demo/" },
     { "source": "/demo/", "destination": "https://porra-navidena.onrender.com/demo/" },
     { "source": "/demo/:path*", "destination": "https://porra-navidena.onrender.com/demo/:path*" }
   ],

@@ -13,7 +13,7 @@
 <script>
 const statusEl=document.getElementById('status'),retry=document.getElementById('retry');let stopped=false;
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
-async function wake(){retry.style.display='none';stopped=false;const started=Date.now();while(!stopped&&Date.now()-started<120000){try{const r=await fetch('/_wake',{cache:'no-store',signal:AbortSignal.timeout(8000)});if(r.ok){statusEl.textContent='La ciudad está lista.';location.replace('/demo/');return}}catch{}statusEl.textContent='Encendiendo luces y preparando la ciudad…';await sleep(2500)}statusEl.textContent='La ciudad está tardando más de lo normal.';retry.style.display='inline-block'}
+async function wake(){retry.style.display='none';stopped=false;const started=Date.now();while(!stopped&&Date.now()-started<120000){try{const r=await fetch('/_experience',{cache:'no-store',signal:AbortSignal.timeout(10000)});if(r.ok){const html=await r.text();if(html.includes('id="experience"')){statusEl.textContent='La ciudad está lista.';document.open();document.write(html);document.close();return}}}catch{}statusEl.textContent='Encendiendo luces y preparando la ciudad…';await sleep(2500)}statusEl.textContent='La ciudad está tardando más de lo normal.';retry.style.display='inline-block'}
 retry.addEventListener('click',wake);wake();
 </script>
 </body></html>
