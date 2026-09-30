@@ -1,0 +1,16 @@
+{
+  "rewrites": [
+    { "source": "/_wake", "destination": "https://porra-navidena.onrender.com/api/config" },
+    { "source": "/demo/:path*", "destination": "https://porra-navidena.onrender.com/demo/:path*" }
+  ],
+  "headers": [
+    {
+      "source": "/trump-dance.gif",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+    },
+    {
+      "source": "/",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }]
+    }
+  ]
+}
